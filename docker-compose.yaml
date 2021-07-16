@@ -1,0 +1,24 @@
+version: "3"
+services:
+  mongodb:
+    image: mongo:4.4.6-bionic
+    container_name: mongodb
+    command: "mongod --bind_ip 0.0.0.0"
+    hostname: squirrel
+    environment:
+      - "MONGO_INITDB_ROOT_USERNAME=squirrel"
+      - "MONGO_INITDB_ROOT_PASSWORD=${SQUIRREL_MONGO_PASSWORD}"
+    networks:
+      - internal
+    ports:
+      - "27017:27017"
+    volumes:
+      - type: volume
+        source: mongodb
+        target: /data/db
+
+networks:
+  internal:
+
+volumes:
+  mongodb:
