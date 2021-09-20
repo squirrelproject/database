@@ -5,20 +5,20 @@ services:
     container_name: mongodb
     command: "mongod --bind_ip 0.0.0.0"
     hostname: squirrel
+    restart: always
     environment:
       - "MONGO_INITDB_ROOT_USERNAME=squirrel"
       - "MONGO_INITDB_ROOT_PASSWORD=${SQUIRREL_MONGO_PASSWORD}"
+    labels:
+      - "traefik.enable=false"
     networks:
       - internal
     ports:
       - "27017:27017"
     volumes:
-      - type: volume
-        source: mongodb
-        target: /data/db
+      - type: bind
+        source: /tank/squirrelproject/database/
+        target: /data/db/
 
 networks:
   internal:
-
-volumes:
-  mongodb:
